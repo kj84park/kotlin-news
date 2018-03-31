@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kr.kyungjoon.hansol.android_kotlin_news.MainActivity">
+    tools:context="kr.kyungjoon.hansol.android_kotlin_news.ui.MainActivity">
 
 <LinearLayout
         android:layout_width="match_parent"

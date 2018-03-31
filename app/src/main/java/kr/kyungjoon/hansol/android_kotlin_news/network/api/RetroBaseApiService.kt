@@ -15,6 +15,6 @@ interface RetroBaseApiService {
         set(value) = TODO()
 
     @GET("/v2/top-headlines")
-    fun getResponse(@Query("country") country : String, @Query("category") category : String, @Query("apiKey") apiKey : String) : Observable<GetResponse>
+    fun getResponse(@Query("country") country : String, @Query("category") category : String?, @Query("apiKey") apiKey : String) : Observable<GetResponse>
 
 }
