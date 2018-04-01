@@ -1,4 +1,4 @@
-package kr.kyungjoon.hansol.android_kotlin_news.ui
+package kr.kyungjoon.hansol.android_kotlin_news.ui.component.main
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

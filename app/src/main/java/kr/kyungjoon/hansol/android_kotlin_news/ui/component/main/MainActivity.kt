@@ -1,5 +1,6 @@
-package kr.kyungjoon.hansol.android_kotlin_news.ui
+package kr.kyungjoon.hansol.android_kotlin_news.ui.component.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kr.kyungjoon.hansol.android_kotlin_news.R
 import kr.kyungjoon.hansol.android_kotlin_news.network.api.RetroBaseApiService
 import kr.kyungjoon.hansol.android_kotlin_news.network.dto.Articles
+import kr.kyungjoon.hansol.android_kotlin_news.ui.component.details.DetailedActivity
+import kr.kyungjoon.hansol.android_kotlin_news.ui.listener.RecyclerItemListener
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var country: String
     lateinit var category: String
     val apikey = "04871c167cfb4a3c9c18b9d170d8ba7f"
+
+    lateinit var localArticles : List<Articles>
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -58,15 +63,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val recyclerItemListener = object : RecyclerItemListener{
+        override fun onItemSelected(position: Int) {
+
+            val intent = Intent(applicationContext,DetailedActivity::class.java)
+            intent.putExtra("article", localArticles[position])
+            startActivity(intent)
+        }
+
+    }
+
     private fun setUpRecyclerView(articles: List<Articles>) {
         recycler_view_news_list.layoutManager = LinearLayoutManager(applicationContext)
         recycler_view_news_list.hasFixedSize()
-        recycler_view_news_list.adapter = MainViewAdapter(articles, this)
+        recycler_view_news_list.adapter = MainViewAdapter(articles, this,recyclerItemListener)
     }
 
     private fun getnews() {
 
-        var localCategory : String? = if("Headline" == category){
+        val localCategory : String? = if("Headline" == category){
             null
         } else {
             category
@@ -76,6 +91,8 @@ class MainActivity : AppCompatActivity() {
                 subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { result ->
                     setUpRecyclerView(result.articles)
+
+                    localArticles = result.articles
                     pb_loading.visibility = View.GONE
                 }, { e -> Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show() })
     }
