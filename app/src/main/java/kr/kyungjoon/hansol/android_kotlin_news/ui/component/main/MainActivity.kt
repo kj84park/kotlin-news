@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var category: String
     val apikey = "04871c167cfb4a3c9c18b9d170d8ba7f"
 
-    lateinit var localArticles : List<Articles>
+    lateinit var localArticles: List<Articles>
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         category = "HeadLine"
         getnews()
 
-        spinner_category.onItemSelectedListener = object : OnItemSelectedListener{
+        spinner_category.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        spinner_country.onItemSelectedListener = object : OnItemSelectedListener{
+        spinner_country.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -63,10 +63,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val recyclerItemListener = object : RecyclerItemListener{
+    private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemSelected(position: Int) {
 
-            val intent = Intent(applicationContext,DetailedActivity::class.java)
+            val intent = Intent(applicationContext, DetailedActivity::class.java)
             intent.putExtra("article", localArticles[position])
             startActivity(intent)
         }
@@ -76,19 +76,18 @@ class MainActivity : AppCompatActivity() {
     private fun setUpRecyclerView(articles: List<Articles>) {
         recycler_view_news_list.layoutManager = LinearLayoutManager(applicationContext)
         recycler_view_news_list.hasFixedSize()
-        recycler_view_news_list.adapter = MainViewAdapter(articles, this,recyclerItemListener)
+        recycler_view_news_list.adapter = MainViewAdapter(articles, this, recyclerItemListener)
     }
 
     private fun getnews() {
 
-        val localCategory : String? = if("Headline" == category){
+        val localCategory: String? = if ("Headline" == category) {
             null
         } else {
             category
         }
 
-        apiService.getResponse(country, localCategory, apikey).
-                subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        apiService.getResponse(country, localCategory, apikey).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { result ->
                     setUpRecyclerView(result.articles)
 

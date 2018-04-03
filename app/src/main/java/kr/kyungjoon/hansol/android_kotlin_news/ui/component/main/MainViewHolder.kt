@@ -8,17 +8,17 @@ import kr.kyungjoon.hansol.android_kotlin_news.network.dto.Articles
 
 class MainViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        fun  bind( position : Int, articles: Articles){
+    fun bind(position: Int, articles: Articles) {
 
-        if(itemView != null) {
-            itemView.tv_title.text = """[${articles.source.name}]${articles.title}"""
+        itemView?.let {
+            it.tv_title.text = """[${articles.source.name}]${articles.title}"""
 
-            if(!"Chosun.com".equals(articles.source.name)){
-                itemView.tv_caption.text = articles.description
+            if (!"Chosun.com".equals(articles.source.name)) {
+                it.tv_caption.text = articles.description
             } else {
-                itemView.tv_caption.text = ""
+                it.tv_caption.text = ""
             }
-            Glide.with(itemView).load(articles.urlToImage).into(itemView.news_image)
+            Glide.with(it).load(articles.urlToImage).into(it.news_image)
         }
     }
 }
