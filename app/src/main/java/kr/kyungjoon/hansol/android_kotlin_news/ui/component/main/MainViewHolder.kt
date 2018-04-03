@@ -10,15 +10,14 @@ class MainViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(position: Int, articles: Articles) {
 
-        itemView?.let {
-            it.tv_title.text = """[${articles.source.name}]${articles.title}"""
-
+        itemView?.apply {
+            tv_title.text = """[${articles.source.name}]${articles.title}"""
             if (!"Chosun.com".equals(articles.source.name)) {
-                it.tv_caption.text = articles.description
+                tv_caption.text = articles.description
             } else {
-                it.tv_caption.text = ""
+                tv_caption.text = ""
             }
-            Glide.with(it).load(articles.urlToImage).into(it.news_image)
+            Glide.with(this).load(articles.urlToImage).into(news_image)
         }
     }
 }
